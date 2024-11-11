@@ -97,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
         GetInputs();
         ChangeGravity();
         CoyoteTime();
-        Debug.Log(moveDirection);
 
 
         //if (leavePlatform == true)        ///antiguo
@@ -264,7 +263,6 @@ public class PlayerMovement : MonoBehaviour
     public void Jump(InputAction.CallbackContext context)
     {
         //jump if is groun/wall +long jump
-        
 
         if (context.performed)//si pulsa boton salto
         {
@@ -288,12 +286,13 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (IsWall())//salto si se mantiene pegado a la pared
                     {
-                        rb.velocity = new Vector2(rb.velocity.x, jumpForce / 1.8f);
+                        rb.velocity = new Vector2(rb.velocity.x, jumpForce / 1.65f);
 
                     }
                     else //salto normal si se separa de la pared
                     {
                         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                        Debug.Log("salto despues de pared");
                     }
                     
                 }
@@ -303,9 +302,10 @@ public class PlayerMovement : MonoBehaviour
             }
             if (IsGrounded() && IsWall()) //necesario para cuando este detectando suelo y pared y que no se sumen las fuerzas y salte mas
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce / 1.8f);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce / 1.2f);
             }
-            
+
+            Debug.Log(rb.velocity);
 
         }
 
@@ -315,6 +315,10 @@ public class PlayerMovement : MonoBehaviour
             //divide la velocidad del salto cuando liberes el boton salto a la mitad de la velocidad que lleva
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2f);
             coyoteTimeCounter = 0f;
+            if (IsGrounded() && IsWall()) //necesario para cuando este detectando suelo y pared y que no se sumen las fuerzas y salte mas
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce / 1.2f);
+            }
         }
     }
     #endregion
@@ -327,7 +331,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsWall())
         {
-            rb.velocity = Vector2.zero;
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2f);
             doubleJump = false;
 
         }
@@ -343,10 +347,7 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="collision"></param>
     public void OnCollisionExit2D(Collision2D collision)
     {
-        //if (!IsGrounded() || !IsWall())       ///Antiguo
-        //{
             leavePlatform = true;
-        //}
     }
 
 

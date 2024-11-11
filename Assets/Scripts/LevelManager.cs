@@ -12,11 +12,17 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField]private Transform restartPoint;
     [SerializeField]private GameObject player;
+
+    public bool pickKey;
+    private PlayerHealth _playerHealth;
+    [SerializeField] private int deathCounter;
+
     private void Awake()
     {
         Instance = this;
         restartPoint = gameObject.transform.GetChild(0);
         player = GameObject.Find("Player");
+        _playerHealth = player.GetComponent<PlayerHealth>();
     }
     // Start is called before the first frame update
     void Start()
@@ -32,5 +38,7 @@ public class LevelManager : MonoBehaviour
     public void Death()//es el game over tipo meat boy
     {
         player.transform.position = restartPoint.position;
+        deathCounter = Mathf.Abs(_playerHealth.Health);
+
     }
 }

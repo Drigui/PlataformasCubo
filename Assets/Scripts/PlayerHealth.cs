@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField]private int playerHealth;
+    [SerializeField]private int health;
+
+    public int Health { get => health; set => health = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +21,8 @@ public class PlayerHealth : MonoBehaviour
     }
     public void TakeDamage()
     {
-        playerHealth--;
-        if (playerHealth < 1)
+        health--;
+        if (health < 0)
         {
             LevelManager.Instance.Death();
         }
