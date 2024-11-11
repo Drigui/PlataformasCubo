@@ -95,30 +95,15 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         GetInputs();
-        ChangeGravity();
         CoyoteTime();
-
-
-        //if (leavePlatform == true)        ///antiguo
-        //{
-        //    if (coyoteTimeCounter > 0.1f)
-        //    {
-        //        StartCoroutine(SetJump());
-        //        leavePlatform = false;
-        //    }
-        //}
-
         if (coyoteTimeCounter < -0.1 && leavePlatform == true)
         {
             doubleJump = true;
         }
-        
         if (isDashing)
         {
             return;
         }
-
-
     }
     private void FixedUpdate()
     {
@@ -129,25 +114,8 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer(); //al ser por velocity(Physics) va en fixed
 
     }
-
-
-    /// <summary>
-    /// change gravity if its in wall or equals the gravityscale to gravity
-    /// </summary>
-    public void ChangeGravity()
-    {
-        //reduce la gravedad si esta pegado a la pared para que caiga mas lento
-        if (IsWall())
-        {
-            rb.gravityScale = gravity / 4;
-        }
-        if(!IsWall())
-        {
-            rb.gravityScale = gravity;
-
-        }
-    }
     #region Get/Cancel Inputs
+
     /// <summary>
     /// coge direccion mediante input system con vector 2
     /// </summary>
@@ -205,9 +173,6 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
     }
 
-   
-    
-
     #region Checkers
     /// <summary>
     /// Check if player is on the ground an returns if its grounded
@@ -219,15 +184,16 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D physics;
         RaycastHit2D physicsR;
         RaycastHit2D physicsL;
+       
+            Debug.DrawRay(playerFeet.transform.position, Vector3.down * 0.1f, Color.red);
+            Debug.DrawRay(playerFeet.transform.position + new Vector3(0.5f, 0, 0), Vector3.down * 0.1f, Color.red);
+            Debug.DrawRay(playerFeet.transform.position + new Vector3(-0.5f, 0, 0), Vector3.down * 0.1f, Color.red);
 
-        Debug.DrawRay(playerFeet.transform.position, Vector3.down * 0.1f, Color.red);
-        Debug.DrawRay(playerFeet.transform.position + new Vector3(0.5f, 0, 0), Vector3.down * 0.1f, Color.red);
-        Debug.DrawRay(playerFeet.transform.position + new Vector3(-0.5f, 0, 0), Vector3.down * 0.1f, Color.red);
-
-        physics = Physics2D.Raycast(playerFeet.transform.position, Vector3.down, 0.1f, Layer);
-        physicsR = Physics2D.Raycast(playerFeet.transform.position + new Vector3(0.5f , 0 , 0), Vector3.down, 0.1f, Layer);
-        physicsL = Physics2D.Raycast(playerFeet.transform.position + new Vector3(-0.5f, 0 , 0), Vector3.down, 0.1f, Layer);
-        return physics || physicsR || physicsL;
+            physics = Physics2D.Raycast(playerFeet.transform.position, Vector3.down, 0.1f, Layer);
+            physicsR = Physics2D.Raycast(playerFeet.transform.position + new Vector3(0.5f, 0, 0), Vector3.down, 0.1f, Layer);
+            physicsL = Physics2D.Raycast(playerFeet.transform.position + new Vector3(-0.5f, 0, 0), Vector3.down, 0.1f, Layer);
+            return physics || physicsR || physicsL;
+        
     }
     /// <summary>
     /// detects all directions. use for wall detect
@@ -235,14 +201,12 @@ public class PlayerMovement : MonoBehaviour
     /// <returns></returns>
     public bool IsWall()
     {
-
         if (moveDirection.y < 0.60f && moveDirection.y > -0.60f ) //condition to only lerft/right detect
         {
             Debug.DrawRay(playerWall.transform.position, moveDirection * 0.75f, Color.red);
             return Physics2D.Raycast(playerWall.transform.position, moveDirection, 0.75f, Layer);
         }
         return false;
-       
     }
     #endregion
 
@@ -251,7 +215,6 @@ public class PlayerMovement : MonoBehaviour
         if (canDash)
         {
             StartCoroutine(Dash());
-
         }
     }
 
@@ -263,50 +226,20 @@ public class PlayerMovement : MonoBehaviour
     public void Jump(InputAction.CallbackContext context)
     {
         //jump if is groun/wall +long jump
-
-        if (context.performed)//si pulsa boton salto
+        if (context.started)//si pulsa boton salto
         {
             if (!IsWall())
             {
                 _playerAnimations.JumpAnimation();
-
             }
-
             if (coyoteTimeCounter > 0 || doubleJump) //salto normal o largo en el suelo, se ha sustituido por el coyote time
             {
-
                 doubleJump = !doubleJump;
                 leavePlatform = false;
-                if (!IsWall())//salto normal
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-
-                }
-                if (!IsGrounded()) //salto si esta en la pared
-                {
-                    if (IsWall())//salto si se mantiene pegado a la pared
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, jumpForce / 1.65f);
-
-                    }
-                    else //salto normal si se separa de la pared
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                        Debug.Log("salto despues de pared");
-                    }
-                    
-                }
-                
-                
-
+                rb.gravityScale = gravity;
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                StartCoroutine(WaitGravity());
             }
-            if (IsGrounded() && IsWall()) //necesario para cuando este detectando suelo y pared y que no se sumen las fuerzas y salte mas
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce / 1.2f);
-            }
-
-            Debug.Log(rb.velocity);
-
         }
 
         // esto permite hacer el salto corto
@@ -315,10 +248,6 @@ public class PlayerMovement : MonoBehaviour
             //divide la velocidad del salto cuando liberes el boton salto a la mitad de la velocidad que lleva
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2f);
             coyoteTimeCounter = 0f;
-            if (IsGrounded() && IsWall()) //necesario para cuando este detectando suelo y pared y que no se sumen las fuerzas y salte mas
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce / 1.2f);
-            }
         }
     }
     #endregion
@@ -329,11 +258,9 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="collision"></param>
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (IsWall())
+        if (IsWall() && !IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2f);
-            doubleJump = false;
-
+            rb.gravityScale = gravity / 4;
         }
         if (IsGrounded())
         {
@@ -350,20 +277,17 @@ public class PlayerMovement : MonoBehaviour
             leavePlatform = true;
     }
 
-
     private void CoyoteTime()
     {
         if (IsGrounded() || IsWall())
         {
             coyoteTimeCounter = coyoteTime;
-           
         }
         else
         {
+            rb.gravityScale = gravity;
             coyoteTimeCounter -= Time.deltaTime;
         }
-        
-
     }
 
     /// <summary>
@@ -372,10 +296,8 @@ public class PlayerMovement : MonoBehaviour
     /// <returns></returns>
     IEnumerator SetJump()
     {
-
         yield return new WaitForSeconds(0.16f);
         doubleJump = true;
-
     }
 
     IEnumerator Dash()
@@ -384,7 +306,14 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(moveDirection.x * dashingPower, moveDirection.y * dashingPower);
+        if (moveDirection.y < 0.20)
+        {
+            rb.velocity = new Vector2(moveDirection.x * dashingPower, moveDirection.y * dashingPower + jumpForce / 2);
+        }
+        else
+        {
+            rb.velocity = new Vector2(moveDirection.x * dashingPower, moveDirection.y * dashingPower);
+        }
         trailRenderer.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         trailRenderer.emitting = false;
@@ -392,7 +321,12 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
+    }
 
+    IEnumerator WaitGravity()
+    {
+        yield return new WaitForSeconds(0.3f);
+        rb.gravityScale = gravity / 4;
     }
 
 }
