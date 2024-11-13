@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     //Components
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private GameObject playerFeet; // for ground check
     private GameObject playerWall; // for wall check
     private PlayerAnimations _playerAnimations;
@@ -213,9 +213,11 @@ public class PlayerMovement : MonoBehaviour
 
    public void DashAction(InputAction.CallbackContext context)
     {
-        if (canDash)
+        if (canDash && context.performed)
         {
             StartCoroutine(Dash());
+        Debug.Log(rb.velocity);
+
         }
     }
 
@@ -237,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (IsWall())
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, 36);
+                    rb.velocity = new Vector2(rb.velocity.x, 32);
 
                 }
                 else
@@ -310,20 +312,32 @@ public class PlayerMovement : MonoBehaviour
         doubleJump = true;
     }
 
+    private void DashType()
+    {
+        if (moveDirection.x == 0f && moveDirection.y == 0f)
+        {
+            if (_playerAnimations.PlayerSprite.flipX)
+            {
+                rb.velocity = new Vector2(-dashingPower, 0);
+            }
+            else
+            {
+                rb.velocity = new Vector2(dashingPower, 0);
+            }
+        }
+        else
+        {
+            rb.velocity = new Vector2(moveDirection.x * dashingPower, moveDirection.y * dashingPower);
+        }
+    }
+
     IEnumerator Dash()
     {
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        if (moveDirection.y < 0.20)
-        {
-            rb.velocity = new Vector2(moveDirection.x * dashingPower, moveDirection.y * dashingPower + jumpForce / 2);
-        }
-        else
-        {
-            rb.velocity = new Vector2(moveDirection.x * dashingPower, moveDirection.y * dashingPower);
-        }
+        DashType();
         trailRenderer.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         trailRenderer.emitting = false;
