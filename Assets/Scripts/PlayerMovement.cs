@@ -90,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
         playerFeet = GameObject.Find("PlayerFeet");
         playerWall = GameObject.Find("PlayerWall");
         trailRenderer = GetComponent<TrailRenderer>();
+        rb.gravityScale = gravity;
 
     }
     private void Update()
@@ -234,11 +235,20 @@ public class PlayerMovement : MonoBehaviour
             }
             if (coyoteTimeCounter > 0 || doubleJump) //salto normal o largo en el suelo, se ha sustituido por el coyote time
             {
-                doubleJump = !doubleJump;
-                leavePlatform = false;
-                rb.gravityScale = gravity;
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                StartCoroutine(WaitGravity());
+                if (IsWall())
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, 36);
+
+                }
+                else
+                {
+                    doubleJump = !doubleJump;
+                    leavePlatform = false;
+                    //rb.gravityScale = gravity;
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    //StartCoroutine(WaitGravity());
+                }
+
             }
         }
 
@@ -260,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsWall() && !IsGrounded())
         {
-            rb.gravityScale = gravity / 4;
+            //rb.gravityScale = gravity / 4;
         }
         if (IsGrounded())
         {
@@ -285,7 +295,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb.gravityScale = gravity;
+            //rb.gravityScale = gravity;
             coyoteTimeCounter -= Time.deltaTime;
         }
     }
