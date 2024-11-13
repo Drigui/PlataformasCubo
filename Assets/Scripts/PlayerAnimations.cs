@@ -10,7 +10,7 @@ public class PlayerAnimations : MonoBehaviour
     private Animator playerAnimator;
     private SpriteRenderer playerSprite;
 
-
+    public SpriteRenderer PlayerSprite { get => playerSprite; set => playerSprite = value; }
 
     private void Awake()
     {
