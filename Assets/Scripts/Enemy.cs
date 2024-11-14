@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private PlayerAnimations _playerAnimations;
+    private PlayerHealth playerHealth;
+    private void Awake()
+    {
+        _playerAnimations = GameObject.Find("Player").GetComponent<PlayerAnimations>();
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,11 +23,47 @@ public class Enemy : MonoBehaviour
     {
         
     }
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage();
+            if (LevelManager.Instance.canCollision)
+            {
+                if (gameObject.CompareTag("White"))
+                {
+                    if (_playerAnimations.colorChange == 1)
+                    {
+                        playerHealth.TakeDamage();
+                        Debug.Log(collision.gameObject.GetComponent<PlayerHealth>());
+                        LevelManager.Instance.canCollision = false;
+                        _playerAnimations.colorChange = 0;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else if (true)
+                {
+                    if (gameObject.CompareTag("Black"))
+                    {
+                        if (_playerAnimations.colorChange == 0)
+                        {
+                            playerHealth.TakeDamage();
+                            LevelManager.Instance.canCollision = false;
+                            _playerAnimations.colorChange = 0;
+
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+           
         }
     }
+
+    
 }

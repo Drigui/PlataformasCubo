@@ -9,6 +9,7 @@ public class PlayerAnimations : MonoBehaviour
     private PlayerMovement _playerMovement;
     private Animator playerAnimator;
     private SpriteRenderer playerSprite;
+    public int colorChange;
 
     public SpriteRenderer PlayerSprite { get => playerSprite; set => playerSprite = value; }
 
@@ -32,6 +33,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         ChangeAnimations();
         FlipSprite();
+        ActualizarLayer();
     }
 
     /// <summary>
@@ -61,12 +63,18 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    private void ActualizarLayer()
+    {
+        playerAnimator.SetLayerWeight(1, colorChange);
+    }
+
     #region ChangeColor
     public void ChangeBlack(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            playerAnimator.SetLayerWeight(1, 1);
+            colorChange = 1;
+            playerAnimator.SetLayerWeight(1, colorChange);
             playerSprite = GetComponentInChildren<SpriteRenderer>();
         }
     }
@@ -74,7 +82,8 @@ public class PlayerAnimations : MonoBehaviour
     {
         if (context.performed)
         {
-            playerAnimator.SetLayerWeight(1, 0);
+            colorChange = 0;
+            playerAnimator.SetLayerWeight(1, colorChange);
             playerSprite = GetComponentInChildren<SpriteRenderer>();
         }
     }

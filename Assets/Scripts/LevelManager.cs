@@ -9,14 +9,18 @@ public class LevelManager : MonoBehaviour
     /// </summary>
 
     public static LevelManager Instance;
+    public bool canCollision;
+
 
     [SerializeField]private Transform restartPoint;
     [SerializeField]private GameObject player;
 
     public bool pickKey;
     private PlayerHealth _playerHealth;
+    private PlayerAnimations _playerAnimations;
     [SerializeField] private int deathCounter;
 
+    
     private void Awake()
     {
         Instance = this;
