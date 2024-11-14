@@ -27,43 +27,49 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (LevelManager.Instance.canCollision)
+            ///collision White
+            if (gameObject.CompareTag("White"))
             {
-                if (gameObject.CompareTag("White"))
+                if (_playerAnimations.colorChange == 1)
                 {
-                    if (_playerAnimations.colorChange == 1)
-                    {
-                        playerHealth.TakeDamage();
-                        Debug.Log(collision.gameObject.GetComponent<PlayerHealth>());
-                        LevelManager.Instance.canCollision = false;
-                        _playerAnimations.colorChange = 0;
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    playerHealth.TakeDamage();
+                    Debug.Log(collision.gameObject.GetComponent<PlayerHealth>());
+                    _playerAnimations.colorChange = 0;
                 }
-                else if (true)
+                else
                 {
-                    if (gameObject.CompareTag("Black"))
-                    {
-                        if (_playerAnimations.colorChange == 0)
-                        {
-                            playerHealth.TakeDamage();
-                            LevelManager.Instance.canCollision = false;
-                            _playerAnimations.colorChange = 0;
-
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    }
+                    return;
                 }
             }
-           
+
+            ///collision White
+            else if (gameObject.CompareTag("Black"))
+            {
+                if (_playerAnimations.colorChange == 0)
+                {
+                    playerHealth.TakeDamage();
+                    _playerAnimations.colorChange = 0;
+
+                }
+                else
+                {
+                    return;
+                }
+            }
         }
     }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (gameObject.CompareTag("Enemy"))
+            {
+                playerHealth.TakeDamage();
+                _playerAnimations.colorChange = 0;
+            }
+        }
+    }
     
+
 }

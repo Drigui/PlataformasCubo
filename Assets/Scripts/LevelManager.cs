@@ -9,7 +9,6 @@ public class LevelManager : MonoBehaviour
     /// </summary>
 
     public static LevelManager Instance;
-    public bool canCollision;
 
 
     [SerializeField]private Transform restartPoint;
