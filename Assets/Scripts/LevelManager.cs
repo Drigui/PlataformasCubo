@@ -26,6 +26,7 @@ public class LevelManager : MonoBehaviour
         restartPoint = gameObject.transform.GetChild(0);
         player = GameObject.Find("Player");
         _playerHealth = player.GetComponent<PlayerHealth>();
+        player.transform.position = restartPoint.position;
     }
     // Start is called before the first frame update
     void Start()
