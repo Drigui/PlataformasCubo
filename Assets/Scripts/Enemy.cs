@@ -8,8 +8,8 @@ public class Enemy : MonoBehaviour
     private PlayerHealth playerHealth;
     private void Awake()
     {
-        _playerAnimations = GameObject.Find("Player").GetComponent<PlayerAnimations>();
-        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+        _playerAnimations = GameObject.Find(GameConstant.PLAYER).GetComponent<PlayerAnimations>();
+        playerHealth = GameObject.Find(GameConstant.PLAYER).GetComponent<PlayerHealth>();
     }
 
     // Start is called before the first frame update
@@ -23,12 +23,13 @@ public class Enemy : MonoBehaviour
     {
         
     }
+    
     public void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag(GameConstant.PLAYER))
         {
             ///collision White
-            if (gameObject.CompareTag("White"))
+            if (gameObject.CompareTag(GameConstant.WHITE))
             {
                 if (_playerAnimations.colorChange == 1)
                 {
@@ -43,7 +44,7 @@ public class Enemy : MonoBehaviour
             }
 
             ///collision White
-            else if (gameObject.CompareTag("Black"))
+            else if (gameObject.CompareTag(GameConstant.BLACK))
             {
                 if (_playerAnimations.colorChange == 0)
                 {
@@ -61,9 +62,9 @@ public class Enemy : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag(GameConstant.PLAYER))
         {
-            if (gameObject.CompareTag("Enemy"))
+            if (gameObject.CompareTag(GameConstant.ENEMY))
             {
                 playerHealth.TakeDamage();
                 _playerAnimations.colorChange = 0;

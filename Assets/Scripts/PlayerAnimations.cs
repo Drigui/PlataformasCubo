@@ -11,14 +11,16 @@ public class PlayerAnimations : MonoBehaviour
     private SpriteRenderer playerSprite;
     public int colorChange;
 
+    [SerializeField] private Enemy _enemy;
     public SpriteRenderer PlayerSprite { get => playerSprite; set => playerSprite = value; }
 
     private void Awake()
     {
+        colorChange = 0;
         _playerMovement = GetComponent<PlayerMovement>();
         playerAnimator = GetComponentInChildren<Animator>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
-
+        _enemy = GameObject.FindGameObjectWithTag(GameConstant.ENEMY).GetComponent<Enemy>();
 
 
     }
@@ -41,11 +43,11 @@ public class PlayerAnimations : MonoBehaviour
     /// </summary>
     private void ChangeAnimations()
     {
-        playerAnimator.SetFloat("X", _playerMovement.MoveDirection.magnitude);
-        playerAnimator.SetBool("Climb", false);
+        playerAnimator.SetFloat(GameConstant.X, _playerMovement.MoveDirection.magnitude);
+        playerAnimator.SetBool(GameConstant.CLIMB, false);
         if (_playerMovement.IsWall())
         {
-            playerAnimator.SetBool("Climb", true);
+            playerAnimator.SetBool(GameConstant.CLIMB, true);
         }
     }
     /// <summary>
@@ -85,13 +87,14 @@ public class PlayerAnimations : MonoBehaviour
             colorChange = 0;
             playerAnimator.SetLayerWeight(1, colorChange);
             playerSprite = GetComponentInChildren<SpriteRenderer>();
+
         }
     }
     #endregion
 
     public void JumpAnimation()
     {
-        playerAnimator.SetTrigger("Jump");
+        playerAnimator.SetTrigger(GameConstant.JUMP);
     }
 
 }

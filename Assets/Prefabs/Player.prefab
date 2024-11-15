@@ -150,8 +150,8 @@ GameObject:
   - component: {fileID: 9123733688104060752}
   - component: {fileID: 1216666235595173602}
   - component: {fileID: 3483437353829185804}
-  - component: {fileID: 4290348247122862802}
   - component: {fileID: 7862783723756545109}
+  - component: {fileID: 4290348247122862802}
   - component: {fileID: 4061819383830409758}
   m_Layer: 0
   m_Name: Player
@@ -292,6 +292,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+--- !u!114 &7862783723756545109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5425549547349357643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e1db83cb6700b4baea3595273382ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorChange: 0
+  _enemy: {fileID: 0}
 --- !u!114 &4290348247122862802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,19 +448,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7862783723756545109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5425549547349357643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7e1db83cb6700b4baea3595273382ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colorChange: 0
 --- !u!96 &4061819383830409758
 TrailRenderer:
   serializedVersion: 3

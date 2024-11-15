@@ -25,6 +25,8 @@ public class PlayerHealth : MonoBehaviour
         if (health < 0)
         {
             LevelManager.Instance.Death();
+            LevelManager.Instance.ResetValues();
+
         }
     }
 }

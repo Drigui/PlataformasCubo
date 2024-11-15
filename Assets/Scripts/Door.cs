@@ -19,6 +19,10 @@ public class Door : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         //load current scene +1
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
+        if (LevelManager.Instance.hasKey)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        }
     }
 }

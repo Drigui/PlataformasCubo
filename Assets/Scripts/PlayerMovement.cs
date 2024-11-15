@@ -87,8 +87,8 @@ public class PlayerMovement : MonoBehaviour
         _playerAnimations = GetComponent<PlayerAnimations>();
         playerControls = new PlayerInputActions();
         rb = GetComponent<Rigidbody2D>();
-        playerFeet = GameObject.Find("PlayerFeet");
-        playerWall = GameObject.Find("PlayerWall");
+        playerFeet = GameObject.Find(GameConstant.PLAYERFEET);
+        playerWall = GameObject.Find(GameConstant.PLAYERWALL);
         trailRenderer = GetComponent<TrailRenderer>();
         rb.gravityScale = gravity;
 
@@ -217,7 +217,6 @@ public class PlayerMovement : MonoBehaviour
         if (canDash && context.performed)
         {
             StartCoroutine(Dash());
-        Debug.Log(rb.velocity);
 
         }
     }
