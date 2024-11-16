@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
     public bool hasKey;
+
+    public GameObject winPanel;
+    public GameObject canvas;
+
     /// <summary>
     /// lvl manager controla puntos cada nivel, puedeEntrarPuerta?, cambio escena, HUD otro script,game over, win
     /// </summary>
@@ -31,13 +36,17 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
+
         timeCounter = 0f;
         hasKey = false;
-        Instance = this;
         restartPoint = gameObject.transform.GetChild(0);
         player = GameObject.Find(GameConstant.PLAYER);
         _playerHealth = player.GetComponent<PlayerHealth>();
         player.transform.position = restartPoint.position;
+        keysPoint = GameObject.Find(GameConstant.KEYS); //crear un empty KEYS/ITEMS que guarden ese tipo de objetos
+        itemsPoint = GameObject.Find(GameConstant.ITEMS);
 
         foreach (Transform child in keysPoint.transform)
         {
@@ -47,6 +56,11 @@ public class LevelManager : MonoBehaviour
         {
             itemsList.Add(child);
 
+        }
+
+        if (SceneManager.GetActiveScene().name == GameConstant.LEVEL3_KEY)
+        {
+            winPanel = canvas.transform.GetChild(0).gameObject;
         }
     }
     // Start is called before the first frame update
@@ -80,8 +94,9 @@ public class LevelManager : MonoBehaviour
                 item.gameObject.SetActive(true);
 
             }
-        
-       
-        
+    }
+    public void ChangeScene(string scename)
+    {
+        SceneManager.LoadScene(scename);
     }
 }

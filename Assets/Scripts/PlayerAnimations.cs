@@ -20,7 +20,11 @@ public class PlayerAnimations : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         playerAnimator = GetComponentInChildren<Animator>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
-        _enemy = GameObject.FindGameObjectWithTag(GameConstant.ENEMY).GetComponent<Enemy>();
+        if (GameObject.FindGameObjectWithTag(GameConstant.ENEMY) != null)
+        {
+            _enemy = GameObject.FindGameObjectWithTag(GameConstant.ENEMY).GetComponent<Enemy>();
+
+        }
 
 
     }

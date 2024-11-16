@@ -7,6 +7,9 @@ TagManager:
   - White
   - Black
   - Enemy
+  - Keys
+  - Item
+  - WinPanel
   layers:
   - Default
   - TransparentFX

@@ -6,6 +6,7 @@ public class GameConstant
 {
     public const string LEVEL1_KEY = "Level1";
     public const string LEVEL2_KEY = "Level2";
+    public const string LEVEL3_KEY = "Level3";
     public const string PLAYER = "Player";
     public const string PLAYERFEET = "PlayerFeet";
     public const string PLAYERWALL = "PlayerWall";
@@ -15,5 +16,8 @@ public class GameConstant
     public const string X = "X";
     public const string CLIMB = "Climb";
     public const string JUMP = "Jump";
+    public const string KEYS = "KEYS";
+    public const string ITEMS = "ITEMS";
+    public const string PANELES = "Paneles";
 
 }
