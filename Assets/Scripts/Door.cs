@@ -7,23 +7,20 @@ using UnityEngine.SceneManagement;
 public class Door : MonoBehaviour
 {
     public GameObject backMenuBt;
-    // Start is called before the first frame update
-    void Start()
+    public GameObject canvas;
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+            canvas = transform.GetChild(0).gameObject;
 
     }
+   
     public void OnTriggerEnter2D(Collider2D collision)
     {
         //load current scene +1
-        if (LevelManager.Instance.hasKey && SceneManager.GetActiveScene().buildIndex < 3)
+        if (LevelManager.Instance.hasKey && SceneManager.GetActiveScene().name != GameConstant.LEVEL3_KEY)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            Debug.Log("Entra");
 
         }
         else if (LevelManager.Instance.hasKey && SceneManager.GetActiveScene().name == GameConstant.LEVEL3_KEY)
@@ -37,6 +34,22 @@ public class Door : MonoBehaviour
             MenuFinal.Instance.contenedorLista = EventSystem.current.firstSelectedGameObject.transform.parent.gameObject;
             MenuFinal.Instance.CheckList();
 
+        }
+        else
+        {
+            if (collision.gameObject.CompareTag(GameConstant.PLAYER))
+            {
+                canvas.SetActive(true);
+
+            }
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag(GameConstant.PLAYER))
+        {
+            canvas.SetActive(false);
         }
     }
 }

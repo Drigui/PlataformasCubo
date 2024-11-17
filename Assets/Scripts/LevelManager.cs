@@ -98,6 +98,7 @@ public class LevelManager : MonoBehaviour
     public void ResetValues()
     {
         pickUpPointsTotal = 0;
+        hasKey = false;
         
             foreach (Transform item in keyList)
             {

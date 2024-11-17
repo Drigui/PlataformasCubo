@@ -172,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
-        Debug.Log(_playerAnimations.colorChange);
     }
 
     #region Checkers
