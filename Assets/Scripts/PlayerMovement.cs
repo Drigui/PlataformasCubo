@@ -105,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+        Debug.Log(moveDirection.y);
     }
     private void FixedUpdate()
     {
@@ -202,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
     /// <returns></returns>
     public bool IsWall()
     {
-        if (moveDirection.y < 0.60f && moveDirection.y > -0.60f ) //condition to only lerft/right detect
+        if (moveDirection.y > -0.70f)
         {
             Debug.DrawRay(playerWall.transform.position, moveDirection * 0.75f, Color.red);
             return Physics2D.Raycast(playerWall.transform.position, moveDirection, 0.75f, Layer);
@@ -297,15 +298,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// wait coyotetime seconds to set jump to true and allow 1 jump
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator SetJump()
-    {
-        yield return new WaitForSeconds(0.16f);
-        doubleJump = true;
-    }
+   
 
     private void DashType()
     {
