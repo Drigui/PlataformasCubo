@@ -321,7 +321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.69407654, y: 0.5}
+  m_AnchoredPosition: {x: -0.6940918, y: 0.5}
   m_SizeDelta: {x: 149.5, y: 39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &262821644
@@ -507,12 +507,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1420256895}
   m_Father: {fileID: 1813426495}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 489, y: -25}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -20, y: -25}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &303117159
@@ -7539,7 +7540,7 @@ GameObject:
   - component: {fileID: 1420256897}
   - component: {fileID: 1420256896}
   m_Layer: 5
-  m_Name: FondoTexto (2)
+  m_Name: DeathCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7552,18 +7553,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420256894}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1824069636}
   - {fileID: 838212401}
-  m_Father: {fileID: 1813426495}
+  m_Father: {fileID: 303117158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -25}
+  m_AnchoredPosition: {x: 51, y: 0}
   m_SizeDelta: {x: 150.888, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1420256896
@@ -8128,7 +8129,7 @@ GameObject:
   - component: {fileID: 1748037735}
   - component: {fileID: 1748037734}
   m_Layer: 5
-  m_Name: FondoTexto (1)
+  m_Name: Time
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8150,10 +8151,10 @@ RectTransform:
   - {fileID: 262821643}
   m_Father: {fileID: 1813426495}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 971.1, y: -25}
-  m_SizeDelta: {x: 150.888, y: 40}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -175, y: -25}
+  m_SizeDelta: {x: 150.88794, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1748037734
 MonoBehaviour:
@@ -8399,7 +8400,6 @@ RectTransform:
   - {fileID: 303117158}
   - {fileID: 1911800827}
   - {fileID: 503890644}
-  - {fileID: 1420256895}
   - {fileID: 1748037733}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
