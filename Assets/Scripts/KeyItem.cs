@@ -11,6 +11,7 @@ public class KeyItem : MonoBehaviour
             LevelManager.Instance.hasKey = true;
             gameObject.SetActive(false);
             //Destroy(gameObject);
+            HUDManager.Instance.keyIcon.SetActive(true);
         }
     }
 }

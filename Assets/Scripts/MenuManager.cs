@@ -24,11 +24,12 @@ public class MenuManager : MonoBehaviour
 
     public GameObject contenedorLista;
 
-    
+   
 
 
     private void Awake()
     {
+       
         contenedorLista = EventSystem.current.firstSelectedGameObject.transform.parent.gameObject;
         mainPanel.SetActive(true);
         selectPanel.SetActive(false);
@@ -90,6 +91,9 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    /// <summary>
+    /// check current obj to make list of tmp_texts
+    /// </summary>
     public void CheckList()
     {
         contenedorLista = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
@@ -104,13 +108,18 @@ public class MenuManager : MonoBehaviour
         listaTexts.Clear();
 
     }
+    /// <summary>
+    /// change color of texts
+    /// </summary>
     public void ChangeTextColor()
     {
+
         foreach (TMP_Text obj in listaTexts)
         {
 
             for (int i = 0; i < currentBt.GetComponentsInChildren<TMP_Text>().Length; i++)
             {
+                /// gets current object to change color text to white
                 if (obj == currentBt.GetComponentInChildren<TMP_Text>())
                 {
                     Debug.Log(obj);
@@ -118,10 +127,10 @@ public class MenuManager : MonoBehaviour
                     text = currentBt.GetComponentInChildren<TMP_Text>();
                     text.color = Color.white;
                 }
+                /// cahnge color text black if not current
                 else if (obj != currentBt.GetComponentInChildren<TMP_Text>())
                 {
 
-                    //text = currentBt.GetComponentInChildren<TMP_Text>();
 
                     obj.color = Color.black;
                 }

@@ -248,7 +248,6 @@ public class PlayerMovement : MonoBehaviour
                     leavePlatform = false;
                     //rb.gravityScale = gravity;
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    //StartCoroutine(WaitGravity());
                 }
 
             }
@@ -265,15 +264,12 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// para cancelar el impulso que mantiene si saltas y te pegas a la pared/ resetear el doble salto
+    /// reset double jump
     /// </summary>
     /// <param name="collision"></param>
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (IsWall() && !IsGrounded())
-        {
-            //rb.gravityScale = gravity / 4;
-        }
+
         if (IsGrounded())
         {
             doubleJump = false;
@@ -347,10 +343,6 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
-    IEnumerator WaitGravity()
-    {
-        yield return new WaitForSeconds(0.3f);
-        rb.gravityScale = gravity / 4;
-    }
+   
 
 }

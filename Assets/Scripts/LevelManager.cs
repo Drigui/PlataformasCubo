@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
 
     public GameObject winPanel;
     public GameObject canvas;
+    private int currentLevel;
 
     /// <summary>
     /// lvl manager controla puntos cada nivel, puedeEntrarPuerta?, cambio escena, HUD otro script,game over, win
@@ -23,6 +24,7 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private float timeCounter;
 
+    public float TimeCounter { get => timeCounter; set => timeCounter = value; }
 
     [SerializeField]private Transform restartPoint;
     [SerializeField]private GameObject player;
@@ -32,6 +34,8 @@ public class LevelManager : MonoBehaviour
     private PlayerHealth _playerHealth;
     private PlayerAnimations _playerAnimations;
     [SerializeField] private int deathCounter;
+    public int DeathCounter { get => deathCounter; set => deathCounter = value; }
+
 
 
     private void Awake()
@@ -48,6 +52,7 @@ public class LevelManager : MonoBehaviour
         keysPoint = GameObject.Find(GameConstant.KEYS); //crear un empty KEYS/ITEMS que guarden ese tipo de objetos
         itemsPoint = GameObject.Find(GameConstant.ITEMS);
 
+        //to get position of objects in scene
         foreach (Transform child in keysPoint.transform)
         {
             keyList.Add(child);
@@ -58,10 +63,12 @@ public class LevelManager : MonoBehaviour
 
         }
 
+        //toactivate win panel in level3
         if (SceneManager.GetActiveScene().name == GameConstant.LEVEL3_KEY)
         {
             winPanel = canvas.transform.GetChild(0).gameObject;
         }
+        
     }
     // Start is called before the first frame update
     void Start()
@@ -74,13 +81,20 @@ public class LevelManager : MonoBehaviour
     {
         timeCounter += Time.deltaTime;
     }
-    public void Death()//es el game over tipo meat boy
+
+    /// <summary>
+    /// game over reset pos
+    /// </summary>
+    public void Death()
     {
         player.transform.position = restartPoint.position;
         deathCounter = Mathf.Abs(_playerHealth.Health);
 
     }
 
+    /// <summary>
+    /// restart values
+    /// </summary>
     public void ResetValues()
     {
         pickUpPointsTotal = 0;
@@ -94,9 +108,13 @@ public class LevelManager : MonoBehaviour
                 item.gameObject.SetActive(true);
 
             }
+        HUDManager.Instance.keyIcon.SetActive(false);
+        timeCounter = 0f;
     }
     public void ChangeScene(string scename)
     {
         SceneManager.LoadScene(scename);
     }
+
+   
 }

@@ -19,5 +19,6 @@ public class GameConstant
     public const string KEYS = "KEYS";
     public const string ITEMS = "ITEMS";
     public const string PANELES = "Paneles";
+    public const string MAXLEVEL_KEY = "MaxLevel";
 
 }

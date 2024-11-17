@@ -12,18 +12,11 @@ public class Enemy : MonoBehaviour
         playerHealth = GameObject.Find(GameConstant.PLAYER).GetComponent<PlayerHealth>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
+  
+    /// <summary>
+    /// death if color
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(GameConstant.PLAYER))
@@ -43,7 +36,7 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-            ///collision White
+            ///collision black
             else if (gameObject.CompareTag(GameConstant.BLACK))
             {
                 if (_playerAnimations.colorChange == 0)
@@ -60,6 +53,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// death if enemy
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(GameConstant.PLAYER))

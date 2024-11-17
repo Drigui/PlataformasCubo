@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
-    public string sceneName;
     public GameObject backMenuBt;
     // Start is called before the first frame update
     void Start()
@@ -17,7 +16,7 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -32,6 +31,12 @@ public class Door : MonoBehaviour
             LevelManager.Instance.winPanel.SetActive(true);
             EventSystem.current.firstSelectedGameObject = backMenuBt;
             EventSystem.current.SetSelectedGameObject(backMenuBt);
+            
+            ///activate menu final script, pick button obj and checklist
+            MenuFinal.Instance.enabled = true;
+            MenuFinal.Instance.contenedorLista = EventSystem.current.firstSelectedGameObject.transform.parent.gameObject;
+            MenuFinal.Instance.CheckList();
+
         }
     }
 }
